@@ -23,7 +23,7 @@ function myTimer(initialSeconds, display) {
 window.onload = function() {
   var minutes = 5,
       seconds = minutes * 60,
-      display = document.querySelector('.timerDisplay');
+      display = document.querySelector('.timer-js');
   myTimer(seconds, display);
 };
   
