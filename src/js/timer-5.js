@@ -26,6 +26,11 @@ function myTimer(initialSeconds, display) {
     console.log(currentSeconds);
     clearInterval(startTimer);
   });
+  
+  resume.addEventListener('click', function () {
+    myTimer(currentSeconds, display);
+    console.log('resume!');
+  });
 }
 
 
