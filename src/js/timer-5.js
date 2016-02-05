@@ -8,7 +8,7 @@ function myTimer(initialSeconds, display) {
     reset = document.querySelector('.reset'),
     finish = document.querySelector('.finish');
 
-  setInterval(function () {
+  var startTimer = setInterval(function () {
 
     minutes = parseInt(currentSeconds / 60, 10);
     seconds = parseInt(currentSeconds % 60, 10);
@@ -23,7 +23,8 @@ function myTimer(initialSeconds, display) {
   }, 1000);
 
   pause.addEventListener('click', function () {
-    console.log('pause!');
+    console.log(currentSeconds);
+    clearInterval(startTimer);
   });
 }
 
