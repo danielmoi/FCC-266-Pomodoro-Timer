@@ -1,14 +1,20 @@
-function myTimer(initialSeconds, display) {
+var currentSeconds,
+  minutes,
+  seconds,
+  pause = document.querySelector('.pause'),
+  resume = document.querySelector('.resume'),
+  reset = document.querySelector('.reset'),
+  finish = document.querySelector('.finish'),
+  display = document.querySelector('.timer-js');
 
-  var currentSeconds = initialSeconds,
-    minutes,
-    seconds,
-    pause = document.querySelector('.pause'),
-    resume = document.querySelector('.resume'),
-    reset = document.querySelector('.reset'),
-    finish = document.querySelector('.finish');
+function startTimer(initialSeconds, display) {
+  
+  currentSeconds = initialSeconds;
 
-  var startTimer = setInterval(function () {
+
+
+
+  setInterval(function () {
 
     minutes = parseInt(currentSeconds / 60, 10);
     seconds = parseInt(currentSeconds % 60, 10);
@@ -26,18 +32,18 @@ function myTimer(initialSeconds, display) {
     console.log(currentSeconds);
     clearInterval(startTimer);
   });
-  
-  resume.addEventListener('click', function () {
-    myTimer(currentSeconds, display);
-    console.log('resume!');
-  });
 }
 
 
+
+resume.addEventListener('click', function () {
+  startTimer(currentSeconds, display);
+  console.log('resume!');
+});
+
 window.onload = function () {
   var minutes = 5,
-    seconds = minutes * 60,
-    display = document.querySelector('.timer-js');
+    seconds = minutes * 60;
 
-  myTimer(seconds, display);
+  startTimer(seconds, display);
 };
