@@ -3,10 +3,10 @@ function MyTimer() {
     referenceTime,
     initial_ms_pomo,
     initial_ms_break,
-      
+
     remaining_ms_pomo,
     remaining_ms_break,
-      
+
     remaining_percent = 1,
     display = document.getElementById('timer1'),
     circle = $('#circle1'),
@@ -14,20 +14,22 @@ function MyTimer() {
     display_min,
     display_sec,
     intervalID = false,
-      session = 'pomo',
-    running = 0;
+    session = 'pomo',
+    running = 0,
+      fresh = 1;
 
-  self.pomo_input = ko.observable(20);
-  self.break_input = ko.observable(5);
-  
+  self.pomo_input = ko.observable(1);
+  self.break_input = ko.observable(1);
+
   self.initial_ms_pomo = ko.observable(self.pomo_input() * 1000 * 60);
   self.initial_ms_break = ko.observable(self.break_input() * 1000 * 60);
   
   self.initial_ms = ko.observable();
+  self.current_ms = ko.observable();
   self.remaining_ms = ko.observable();
-  
-  
-  
+
+
+
   console.log(self.initial_ms_pomo());
 
   self.p_add = function () {
@@ -35,46 +37,50 @@ function MyTimer() {
       self.pomo_input(self.pomo_input() + 1);
     }
   };
-  
+
   self.p_minus = function () {
     if (self.pomo_input() > 1) {
       self.pomo_input(self.pomo_input() - 1);
     }
   };
-  
+
   self.b_add = function () {
     if (self.break_input() < 60) {
       self.break_input(self.break_input() + 1);
     }
   };
-  
+
   self.b_minus = function () {
     if (self.break_input() > 1) {
       self.break_input(self.break_input() - 1);
     }
-  };  
-  
-  
-  
+  };
+
+
+
   self.start = function () {
 
     if (running === 0) {
       referenceTime = Date.now();
       running = 1;
-      if (session === 'pomo') {
-        self.initial_ms(self.initial_ms_pomo());
+      if (fresh === 1) {
+        fresh = 0;
+        if (session === 'pomo') {
+          self.current_ms(self.initial_ms_pomo());
+          self.initial_ms(self.initial_ms_pomo());
+        }
+        if (session === 'break') {
+          self.current_ms(self.initial_ms_break());
+          self.initial_ms(self.initial_ms_break());
+        }
       }
-      if (session === 'break') {
-        self.initial_ms(self.initial_ms_break());
-      }
-
 
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
           actualInterval = checkTime - referenceTime;
         // actualInterval gets quite large
 
-        self.remaining_ms(self.initial_ms() - actualInterval);
+        self.remaining_ms(self.current_ms() - actualInterval);
         self.display_clock(self.remaining_ms());
 
         remaining_percent = (self.remaining_ms() / self.initial_ms());
@@ -86,12 +92,21 @@ function MyTimer() {
           self.stop();
           self.finished();
         }
-
-
-
       }, 1000);
     }
+    console.log('start, intervalID: ' + intervalID);
+  };
 
+  self.stop = function () {
+    if (running === 1) {
+      running = 0;
+      self.current_ms(self.remaining_ms());
+      clearInterval(intervalID);
+      console.log(session);
+      console.log(self.remaining_ms());
+      
+    }
+    console.log('stop, intervalID: ' + intervalID);
   };
 
   self.display_clock = function (time) {
@@ -106,32 +121,21 @@ function MyTimer() {
 
   self.display_circle = function (percent) {
     circle.css('stroke-dashoffset', maxOffset * percent);
-    console.log(percent, maxOffset * percent);
   };
   self.display_circle(1);
 
 
 
-  self.stop = function () {
-    if (running === 1) {
-      running = 0;
-      self.initial_ms(self.remaining_ms());
-      clearInterval(intervalID);
-    }
-  };
+
 
   self.reset = function () {
     running = 0;
+    fresh = 1;
     clearInterval(intervalID);
-    if (session === 'pomo') {
-      self.initial_ms(self.initial_ms_pomo());
-    }
-    if (session === 'break') {
-      self.initial_ms(self.initial_ms_break());
-    }
     self.display_clock(self.initial_ms());
     self.display_circle(1);
-    console.log(intervalID);
+    console.log('break, intervalID: ' + intervalID);
+
   };
 
   self.finished = function () {
