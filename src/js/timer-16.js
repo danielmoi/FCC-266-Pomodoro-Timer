@@ -14,19 +14,14 @@ function MyTimer(mins, container) {
     if (running === 0) {
       referenceTime = Date.now();
       running = 1;
+      self.display(initial_ms);
 
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
           actualInterval = checkTime - referenceTime;
         remaining_ms = initial_ms - actualInterval;
-        
+
         self.display(remaining_ms);
-
-//        if (actualInterval < 750) {
-//          console.log("hello");
-//          remaining_ms += 750;
-//        }
-
 
 
       }, 250);
@@ -42,6 +37,8 @@ function MyTimer(mins, container) {
     display.innerHTML = display_min + ":" + display_sec;
   };
 
+  self.display(initial_ms);
+
 
 
   self.stop = function () {
@@ -56,6 +53,7 @@ function MyTimer(mins, container) {
     running = 0;
     clearInterval(intervalID);
     initial_ms = mins * 1000 * 60;
+    self.display(initial_ms);
   };
 
 
