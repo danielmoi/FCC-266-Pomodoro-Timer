@@ -2,7 +2,10 @@ function MyTimer(mins, container) {
   var referenceTime,
     initial_ms = mins * 1000 * 60,
     remaining_ms,
+    remaining_percent = 1,
     display = document.getElementById(container),
+    circle = $('#circle1'),
+    maxOffset = 500,
     display_min,
     display_sec,
     intervalID = false,
@@ -17,17 +20,23 @@ function MyTimer(mins, container) {
 
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
-          actualInterval = checkTime - referenceTime;
-        remaining_ms = initial_ms - actualInterval;
 
-        self.display(remaining_ms);
-        
+          actualInterval = checkTime - referenceTime;
+        // actualInterval gets quite large
+
+        remaining_ms = initial_ms - actualInterval;
+        self.display_clock(remaining_ms);
+
+        remaining_percent = remaining_ms / initial_ms;
+        self.display_circle(remaining_percent);
+
         if (remaining_ms <= 0) {
-          self.display(0);
+          self.display_clock(0);
+          self.display_circle(0);
           self.stop();
           self.finished();
         }
-        
+
 
 
       }, 250);
@@ -35,7 +44,7 @@ function MyTimer(mins, container) {
 
   };
 
-  self.display = function (time) {
+  self.display_clock = function (time) {
     display_min = Math.floor(time / 60000);
     display_sec = Math.floor(time / 1000) % 60;
     display_sec = display_sec < 10 ? '0' + display_sec : display_sec;
@@ -43,7 +52,12 @@ function MyTimer(mins, container) {
     display.innerHTML = display_min + ":" + display_sec;
   };
 
-  self.display(initial_ms);
+  self.display_clock(initial_ms);
+
+  self.display_circle = function (percent) {
+    circle.css('stroke-dashoffset', maxOffset * percent);
+  };
+  self.display_circle(1);
 
 
 
@@ -59,7 +73,8 @@ function MyTimer(mins, container) {
     running = 0;
     clearInterval(intervalID);
     initial_ms = mins * 1000 * 60;
-    self.display(initial_ms);
+    self.display_clock(initial_ms);
+    self.display_circle(1);
     console.log(intervalID);
   };
 

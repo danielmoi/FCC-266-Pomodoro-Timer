@@ -47,14 +47,12 @@ p {
 
 .circle {
   stroke-dasharray: 500;
-  stroke-dashoffset: 0;
   transform: rotate(-90deg);
   transform-origin: 50%;
 }
 
 .circle1 {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1s linear;
 }
 
 button {
