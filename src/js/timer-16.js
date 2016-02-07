@@ -1,43 +1,56 @@
-function MyTimer(mins, container) {
+function MyTimer() {
   var self = this,
     referenceTime,
-    initial_ms,
-    remaining_ms,
+    initial_ms_pomo,
+    initial_ms_break,
+      
+    remaining_ms_pomo,
+    remaining_ms_break,
+      
     remaining_percent = 1,
-    display = document.getElementById(container),
+    display = document.getElementById('timer1'),
     circle = $('#circle1'),
     maxOffset = 500,
     display_min,
     display_sec,
     intervalID = false,
+      session = 'pomo',
     running = 0;
 
-  self.p_input = ko.observable(20);
-  self.b_input = ko.observable(5);
-  initial_ms = self.p_input() * 1000 * 60;
-  console.log(initial_ms);
+  self.pomo_input = ko.observable(20);
+  self.break_input = ko.observable(5);
+  
+  self.initial_ms_pomo = ko.observable(self.pomo_input() * 1000 * 60);
+  self.initial_ms_break = ko.observable(self.break_input() * 1000 * 60);
+  
+  self.initial_ms = ko.observable();
+  self.remaining_ms = ko.observable();
+  
+  
+  
+  console.log(self.initial_ms_pomo());
 
   self.p_add = function () {
-    if (self.p_input() < 60) {
-      self.p_input(self.p_input() + 1);
+    if (self.pomo_input() < 60) {
+      self.pomo_input(self.pomo_input() + 1);
     }
   };
-
+  
   self.p_minus = function () {
-    if (self.p_input() > 1) {
-      self.p_input(self.p_input() - 1);
+    if (self.pomo_input() > 1) {
+      self.pomo_input(self.pomo_input() - 1);
     }
   };
-
+  
   self.b_add = function () {
-    if (self.b_input() < 60) {
-      self.b_input(self.b_input() + 1);
+    if (self.break_input() < 60) {
+      self.break_input(self.break_input() + 1);
     }
   };
-
+  
   self.b_minus = function () {
-    if (self.b_input() > 1) {
-      self.b_input(self.b_input() - 1);
+    if (self.break_input() > 1) {
+      self.break_input(self.break_input() - 1);
     }
   };  
   
@@ -48,23 +61,26 @@ function MyTimer(mins, container) {
     if (running === 0) {
       referenceTime = Date.now();
       running = 1;
-      initial_ms = self.p_input() * 1000 * 60;
-      self.display_clock(initial_ms);
+      if (session === 'pomo') {
+        self.initial_ms(self.initial_ms_pomo());
+      }
+      if (session === 'break') {
+        self.initial_ms(self.initial_ms_break());
+      }
 
 
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
-
           actualInterval = checkTime - referenceTime;
         // actualInterval gets quite large
 
-        remaining_ms = initial_ms - actualInterval;
-        self.display_clock(remaining_ms);
+        self.remaining_ms(self.initial_ms() - actualInterval);
+        self.display_clock(self.remaining_ms());
 
-        remaining_percent = remaining_ms / initial_ms;
+        remaining_percent = (self.remaining_ms() / self.initial_ms());
         self.display_circle(remaining_percent);
 
-        if (remaining_ms <= 0) {
+        if (self.remaining_ms() <= 0) {
           self.display_clock(0);
           self.display_circle(0);
           self.stop();
@@ -86,7 +102,7 @@ function MyTimer(mins, container) {
     display.innerHTML = display_min + ":" + display_sec;
   };
 
-  self.display_clock(initial_ms);
+  self.display_clock(self.initial_ms_pomo());
 
   self.display_circle = function (percent) {
     circle.css('stroke-dashoffset', maxOffset * percent);
@@ -99,7 +115,7 @@ function MyTimer(mins, container) {
   self.stop = function () {
     if (running === 1) {
       running = 0;
-      initial_ms = remaining_ms;
+      self.initial_ms(self.remaining_ms());
       clearInterval(intervalID);
     }
   };
@@ -107,8 +123,13 @@ function MyTimer(mins, container) {
   self.reset = function () {
     running = 0;
     clearInterval(intervalID);
-    initial_ms = mins * 1000 * 60;
-    self.display_clock(initial_ms);
+    if (session === 'pomo') {
+      self.initial_ms(self.initial_ms_pomo());
+    }
+    if (session === 'break') {
+      self.initial_ms(self.initial_ms_break());
+    }
+    self.display_clock(self.initial_ms());
     self.display_circle(1);
     console.log(intervalID);
   };
@@ -116,6 +137,12 @@ function MyTimer(mins, container) {
   self.finished = function () {
     // switch timers and colors
     console.log('finished!');
+    if (session === 'pomo') {
+      session = 'break';
+    }
+    if (session === 'break') {
+      session = 'pomo';
+    }
   };
 
 
@@ -123,7 +150,7 @@ function MyTimer(mins, container) {
 }
 
 
-var timer1 = new MyTimer(0.3, 'timer1');
+var timer1 = new MyTimer();
 $('.stop').on('click', timer1.stop);
 $('.start').on('click', timer1.start);
 $('.reset').on('click', timer1.reset);
@@ -137,9 +164,5 @@ $('#b-minus').on('click', timer1.b_minus);
 $(window).load(function () {
   $("body").removeClass("preload");
 });
-
-var ViewModel = function () {
-  var self = this;
-};
 
 ko.applyBindings(timer1);
