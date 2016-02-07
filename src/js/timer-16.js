@@ -6,12 +6,15 @@ function MyTimer(mins, container) {
     display_min,
     display_sec,
     intervalID = false,
+    running = 0,
     self = this;
 
   self.start = function () {
     referenceTime = Date.now();
+    console.log(running);
 
-    if (!self.isRunning()) {
+    if (running === 0) {
+      running = 1;
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
           actualInterval = checkTime - referenceTime;
@@ -35,16 +38,16 @@ function MyTimer(mins, container) {
 
 
   self.stop = function () {
-    initial_ms = remaining_ms;
-    clearInterval(intervalID);
-    intervalID = false;
-    console.log(intervalID);
-    console.log(remaining_ms);
+    if (running === 1) {
+      running = 0;
+      initial_ms = remaining_ms;
+      clearInterval(intervalID);
+      intervalID = false;
+      console.log(intervalID);
+      console.log(remaining_ms);
+    }
   };
-  
-  self.isRunning = function() {
-    return intervalID !== false;
-  };
+
 
 
 
@@ -53,6 +56,5 @@ function MyTimer(mins, container) {
 
 
 var timer1 = new MyTimer(1, 'timer1');
-timer1.start();
 $('.stop').on('click', timer1.stop);
 $('.start').on('click', timer1.start);
