@@ -12,16 +12,45 @@ function MyTimer(mins, container) {
     intervalID = false,
     running = 0;
 
-  self.p_input = ko.observable(0.2);
+  self.p_input = ko.observable(20);
+  self.b_input = ko.observable(5);
   initial_ms = self.p_input() * 1000 * 60;
   console.log(initial_ms);
 
+  self.p_add = function () {
+    if (self.p_input() < 60) {
+      self.p_input(self.p_input() + 1);
+    }
+  };
 
+  self.p_minus = function () {
+    if (self.p_input() > 1) {
+      self.p_input(self.p_input() - 1);
+    }
+  };
+
+  self.b_add = function () {
+    if (self.b_input() < 60) {
+      self.b_input(self.b_input() + 1);
+    }
+  };
+
+  self.b_minus = function () {
+    if (self.b_input() > 1) {
+      self.b_input(self.b_input() - 1);
+    }
+  };  
+  
+  
+  
   self.start = function () {
 
     if (running === 0) {
       referenceTime = Date.now();
       running = 1;
+      initial_ms = self.p_input() * 1000 * 60;
+      self.display_clock(initial_ms);
+
 
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
@@ -97,6 +126,12 @@ var timer1 = new MyTimer(0.3, 'timer1');
 $('.stop').on('click', timer1.stop);
 $('.start').on('click', timer1.start);
 $('.reset').on('click', timer1.reset);
+
+$('#p-add').on('click', timer1.p_add);
+$('#p-minus').on('click', timer1.p_minus);
+
+$('#b-add').on('click', timer1.b_add);
+$('#b-minus').on('click', timer1.b_minus);
 
 $(window).load(function () {
   $("body").removeClass("preload");
