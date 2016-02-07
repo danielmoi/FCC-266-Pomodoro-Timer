@@ -26,42 +26,74 @@ body {
   -o-transition: none !important;
 }
 
+.break {
+  color: #4da7f4;
+}
+
+.pomodoro {
+  color: #5fbf88;
+}
+
 p {
   font-size: 2em;
 }
 
+h1 {
+  text-align: center;
+}
+
+.header {
+  height: 60px;
+  line-height: 60px;
+}
+
 .timer-container {
   max-width: 50%;
-  margin: 50px auto;
+  margin: 10px auto;
 }
 
 .options {
   padding: 10px 0;
-  margin-bottom: 20px;
+  height: 80px;
+  text-align: center;
+}
+
+.controls {
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
 }
 
 .options__pomodoro,
 .options__break {
-  width: 45%;
+  width: 50%;
   float: left;
 }
 
 .timer-js {
   color: tomato;
+  position: absolute;
+  left: 0;
+  right: 0;
+  line-height: 300px;
+  font-size: 3em;
 }
 
 .circle-container {
-  width: 300px;
+  width: 100%;
   height: 300px;
-  background: rgba(99, 99, 99, 0.1);
   text-align: center;
   display: inline-block;
-  margin-right: 10px;
+  position: relative;
 }
 
 .circle {
   stroke-dasharray: 500;
   transform: rotate(-90deg);
+  transform-origin: 50%;
+}
+
+.rect {
   transform-origin: 50%;
 }
 
@@ -73,11 +105,18 @@ p {
 button,
 input {
   padding: 10px;
-  border: 1px solid tomato;
   background: white;
   font-size: 1em;
+  border: 1px solid #444444;
   border-radius: 5px;
-  color: tomato;
+}
+
+input.break {
+  border: 1px solid #4da7f4;
+}
+
+i.fa:hover {
+  cursor: pointer;
 }
 
 button:hover {
@@ -93,6 +132,5 @@ input {
 
 .fa {
   font-size: 2em;
-  color: tomato;
   margin: 0 10px;
 }

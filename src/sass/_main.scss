@@ -18,39 +18,70 @@ body {
   -o-transition: none !important;
 }
 
+// COLOURS
+
+.break {
+  color: $break;
+}
+
+.pomodoro {
+  color: $pomodoro;
+}
+
+
 // TYPOGRAPHY 
 p {
   font-size: 2em;
 }
 
+h1 {
+  text-align: center;
+}
+
 // SECTIONS
+.header {
+  height: 60px;
+  line-height: 60px;
+}
+
 .timer-container {
   max-width: 50%;
-  margin: 50px auto;
+  margin: 10px auto;
 }
 
 .options {
   padding: 10px 0;
-  margin-bottom: 20px;
+  height: 80px;
+  text-align: center;
+}
+
+.controls {
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
 }
 
 .options__pomodoro,
 .options__break {
-  width: 45%;
+  width: 50%;
   float: left;
 }
 
 .timer-js {
   color: $primary;
+  position: absolute;
+  left: 0;
+  right: 0;
+  line-height: 300px;
+  font-size: 3em;
 }
 
 .circle-container {
-  width: 300px;
+  width: 100%;
   height: 300px;
-  background: rgba(99, 99, 99, 0.1);
   text-align: center;
   display: inline-block;
-  margin-right: 10px;
+  position: relative;
 }
 
 .circle {
@@ -58,6 +89,11 @@ p {
   transform: rotate(-90deg);
   transform-origin: 50%;
 }
+
+.rect {
+  transform-origin: 50%;
+}
+
 
 .circle1 {
   stroke-dashoffset: 0;
@@ -68,11 +104,18 @@ p {
 button,
 input {
   padding: 10px;
-  border: 1px solid $primary;
   background: white;
   font-size: 1em;
+  border: 1px solid $gray;
   border-radius: 5px;
-  color: $primary;
+}
+
+input.break {
+    border: 1px solid $break;
+}
+
+i.fa:hover {
+  cursor: pointer;
 }
 
 button:hover {
@@ -88,6 +131,5 @@ input {
 
 .fa {
   font-size: 2em;
-  color: $primary;
   margin: 0 10px;
 }

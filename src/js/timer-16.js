@@ -114,6 +114,7 @@ function MyTimer(mins, container) {
   };
 
   self.finished = function () {
+    // switch timers and colors
     console.log('finished!');
   };
 
