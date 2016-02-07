@@ -1,6 +1,7 @@
 function MyTimer(mins, container) {
-  var referenceTime,
-    initial_ms = mins * 1000 * 60,
+  var self = this,
+    referenceTime,
+    initial_ms,
     remaining_ms,
     remaining_percent = 1,
     display = document.getElementById(container),
@@ -9,8 +10,12 @@ function MyTimer(mins, container) {
     display_min,
     display_sec,
     intervalID = false,
-    running = 0,
-    self = this;
+    running = 0;
+
+  self.p_input = ko.observable(0.2);
+  initial_ms = self.p_input() * 1000 * 60;
+  console.log(initial_ms);
+
 
   self.start = function () {
 
@@ -39,7 +44,7 @@ function MyTimer(mins, container) {
 
 
 
-      }, 250);
+      }, 1000);
     }
 
   };
@@ -56,6 +61,7 @@ function MyTimer(mins, container) {
 
   self.display_circle = function (percent) {
     circle.css('stroke-dashoffset', maxOffset * percent);
+    console.log(percent, maxOffset * percent);
   };
   self.display_circle(1);
 
@@ -80,19 +86,24 @@ function MyTimer(mins, container) {
 
   self.finished = function () {
     console.log('finished!');
-  }
+  };
 
 
 
 }
 
 
-
-var timer1 = new MyTimer(0.2, 'timer1');
+var timer1 = new MyTimer(0.3, 'timer1');
 $('.stop').on('click', timer1.stop);
 $('.start').on('click', timer1.start);
 $('.reset').on('click', timer1.reset);
 
-$(window).load(function() {
+$(window).load(function () {
   $("body").removeClass("preload");
 });
+
+var ViewModel = function () {
+  var self = this;
+};
+
+ko.applyBindings(timer1);

@@ -67,7 +67,7 @@ p {
 
 .circle1 {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1s linear;
+  transition: stroke-dashoffset 0 linear;
 }
 
 button,
@@ -85,7 +85,7 @@ button:hover {
 }
 
 input {
-  width: 30px;
+  width: 50px;
   font-size: 2em;
   padding: 0;
 }
