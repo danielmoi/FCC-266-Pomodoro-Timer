@@ -10,10 +10,9 @@ function MyTimer(mins, container) {
     self = this;
 
   self.start = function () {
-    referenceTime = Date.now();
-    console.log(running);
 
     if (running === 0) {
+      referenceTime = Date.now();
       running = 1;
       intervalID = setInterval(function () {
         var checkTime = Date.now(),
@@ -29,8 +28,8 @@ function MyTimer(mins, container) {
         display_min = display_min < 10 ? '0' + display_min : display_min;
         display.innerHTML = display_min + ":" + display_sec;
       }, 250);
+      console.log(intervalID);
     }
-    console.log(intervalID);
 
   };
 
@@ -42,7 +41,6 @@ function MyTimer(mins, container) {
       running = 0;
       initial_ms = remaining_ms;
       clearInterval(intervalID);
-      intervalID = false;
       console.log(intervalID);
       console.log(remaining_ms);
     }
