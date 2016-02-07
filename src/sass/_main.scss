@@ -26,8 +26,14 @@ p {
 
 .options {
   padding: 10px 0;
+  margin-bottom: 20px;
 }
 
+.options__pomodoro,
+.options__break {
+  width: 45%;
+  float: left;
+}
 
 .timer-js {
   color: $primary;
@@ -57,7 +63,7 @@ p {
 
 // ELEMENTS
 
-button {
+button, input {
   padding: 10px;
   border: 1px solid $primary;
   background: white;
@@ -68,4 +74,16 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+input {
+  width: 30px;
+  font-size: 2em;
+  padding: 0;
+}
+
+.fa {
+  font-size: 2em;
+  color: $primary;
+  margin: 0 10px;
 }

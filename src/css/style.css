@@ -30,6 +30,13 @@ p {
 
 .options {
   padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.options__pomodoro,
+.options__break {
+  width: 45%;
+  float: left;
 }
 
 .timer-js {
@@ -55,7 +62,7 @@ p {
   stroke-dashoffset: 0;
 }
 
-button {
+button, input {
   padding: 10px;
   border: 1px solid tomato;
   background: white;
@@ -66,4 +73,16 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+input {
+  width: 30px;
+  font-size: 2em;
+  padding: 0;
+}
+
+.fa {
+  font-size: 2em;
+  color: tomato;
+  margin: 0 10px;
 }
