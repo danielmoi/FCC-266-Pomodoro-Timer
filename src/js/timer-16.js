@@ -92,3 +92,7 @@ var timer1 = new MyTimer(0.2, 'timer1');
 $('.stop').on('click', timer1.stop);
 $('.start').on('click', timer1.start);
 $('.reset').on('click', timer1.reset);
+
+$(window).load(function() {
+  $("body").removeClass("preload");
+});

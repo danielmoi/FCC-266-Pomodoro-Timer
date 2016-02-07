@@ -19,6 +19,13 @@ body {
   height: 100%;
 }
 
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
 p {
   font-size: 2em;
 }
@@ -60,9 +67,11 @@ p {
 
 .circle1 {
   stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear;
 }
 
-button, input {
+button,
+input {
   padding: 10px;
   border: 1px solid tomato;
   background: white;
