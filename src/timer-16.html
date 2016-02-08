@@ -19,7 +19,7 @@
   <div class="timer-container">
     <div class="options">
       <div class="options__pomodoro">
-        <h2>Pomodoro</h2>
+        <h2 class="pomodoro">Pomodoro</h2>
         <h4>
           <i id="p-add" class="fa fa-plus-square pomodoro"></i>
           <input id="options__pomodoro-length" class="pomodoro" type="text" data-bind="textInput: pomo_input">
@@ -27,7 +27,7 @@
         </h4>
       </div>
       <div class="options__break">
-        <h2>Break</h2>
+        <h2 class="break">Break</h2>
         <h4>
           <i id="b-add" class="fa fa-plus-square break"></i>
           <input id="options__break-length" class="break" type="text" data-bind="textInput: break_input">
@@ -36,30 +36,28 @@
       </div>
     </div>
 
-    <div id="controls" class="controls">
-
-
-      <button class="start">Start</button>
-      <button class="stop">Stop</button>
-      <button class="reset">Reset</button>
-
-
-    </div>
 
     <div class="circle-container">
       <svg height="300" width="300">
-        <rect class="rect" x="25" y="25" width="250" height="250" fill="#5fbf88" fill-opacity="0.5" />
-        <circle id="circle1" class="circle circle1" cx="150" cy="150" r="79.5774715" stroke="#ff6347" stroke-width="20" fill="none" />
+        <rect id="rect1" class="rect1" x="25" y="25" width="250" height="250" fill="#5fbf88" fill-opacity="0.5" />
+        <circle id="circle1" class="circle circle1 break" cx="150" cy="150" r="79.5774715" stroke="#5fbf88" stroke-width="20" fill="none" />
         <span id="timer1" class="timer-js"></span>
       </svg>
     </div>
+
+    <div id="controls" class="controls">
+      <button class="start">Start</button>
+      <button class="stop">Stop</button>
+      <button class="reset">Reset</button>
+    </div>
+
 
     <div>initial_ms_pomo: <span data-bind="text: initial_ms_pomo"></span></div>
     <div>initial_ms_break: <span data-bind="text: initial_ms_break()"></span>
       <div>pomo_input: <span data-bind="text: pomo_input"></span></div>
       <div>break_input: <span data-bind="text: break_input()"></span></div>
-      
-    
+
+
     </div>
 
   </div>

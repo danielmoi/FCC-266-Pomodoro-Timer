@@ -151,11 +151,18 @@ function MyTimer() {
     fresh = 1;
     if (session === 'pomo') {
       console.log('assigning BREAK');
+      $('#circle1').attr('stroke', color_break);
+      $('#rect1').attr('fill', color_break);
+      $('.timer-js').css('color', color_break);
+      
       session = 'break';
       return self.start();
     }
     if (session === 'break') {
       console.log('assigning POMO');
+      $('#circle1').attr('stroke', color_pomo);
+      $('#rect1').attr('fill', color_pomo);
+      $('.timer-js').css('color', color_pomo);
       session = 'pomo';
       self.start();
       return;
@@ -166,7 +173,8 @@ function MyTimer() {
 
 
 }
-
+var color_pomo = '#5fbf88';
+var color_break = '#4da7f4';
 
 var timer1 = new MyTimer();
 $('.stop').on('click', timer1.stop);
