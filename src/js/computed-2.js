@@ -21,9 +21,7 @@ function MyTimer() {
   self.pomo_input = ko.observable(1);
   self.break_input = ko.observable(1);
 
-  self.initial_ms_pomo = ko.computed(function() {
-    return self.pomo_input() * 1000 * 60;
-  });
+  self.initial_ms_pomo = ko.observable(self.pomo_input() * 1000 * 60);
   self.initial_ms_break = ko.computed(function() {
     return self.break_input() * 1000 * 60;
   });
