@@ -16,18 +16,18 @@ function MyTimer() {
     intervalID = false,
     session = 'pomo',
     running = 0,
-      fresh = 1;
+    fresh = 1;
 
-  self.pomo_input = ko.observable(1);
+  self.pomo_input = ko.observable(0.2);
   self.break_input = ko.observable(1);
 
-  self.initial_ms_pomo = ko.computed(function() {
+  self.initial_ms_pomo = ko.computed(function () {
     return self.pomo_input() * 1000 * 60;
   });
-  self.initial_ms_break = ko.computed(function() {
+  self.initial_ms_break = ko.computed(function () {
     return self.break_input() * 1000 * 60;
   });
-  
+
   self.initial_ms = ko.observable();
   self.current_ms = ko.observable();
   self.remaining_ms = ko.observable();
@@ -70,10 +70,12 @@ function MyTimer() {
       if (fresh === 1) {
         fresh = 0;
         if (session === 'pomo') {
+          console.log('starting new POMO!');
           self.current_ms(self.initial_ms_pomo());
           self.initial_ms(self.initial_ms_pomo());
         }
         if (session === 'break') {
+          console.log('starting new session BREAK');
           self.current_ms(self.initial_ms_break());
           self.initial_ms(self.initial_ms_break());
         }
@@ -96,9 +98,11 @@ function MyTimer() {
           self.stop();
           self.finished();
         }
-      }, 1000);
+        console.log('intervalID: ' + intervalID);
+      }, 500);
     }
     console.log('start, intervalID: ' + intervalID);
+    console.log('self.initial_ms_break(): ' + self.initial_ms_break());
   };
 
   self.stop = function () {
@@ -108,9 +112,11 @@ function MyTimer() {
       clearInterval(intervalID);
       console.log(session);
       console.log(self.remaining_ms());
-      
+
     }
     console.log('stop, intervalID: ' + intervalID);
+    console.log('self.initial_ms_break(): ' + self.initial_ms_break());
+
   };
 
   self.display_clock = function (time) {
@@ -128,29 +134,33 @@ function MyTimer() {
   };
   self.display_circle(1);
 
-
-
-
-
   self.reset = function () {
     running = 0;
     fresh = 1;
     clearInterval(intervalID);
     self.display_clock(self.initial_ms());
     self.display_circle(1);
-    console.log('break, intervalID: ' + intervalID);
+    console.log('reset, intervalID: ' + intervalID);
 
   };
 
   self.finished = function () {
     // switch timers and colors
-    console.log('finished!');
+    console.log('finished, intervalID: ' + intervalID);
+    running = 0;
+    fresh = 1;
     if (session === 'pomo') {
+      console.log('assigning BREAK');
       session = 'break';
+      return self.start();
     }
     if (session === 'break') {
+      console.log('assigning POMO');
       session = 'pomo';
+      self.start();
+      return;
     }
+    console.log('this should not be logged');
   };
 
 
