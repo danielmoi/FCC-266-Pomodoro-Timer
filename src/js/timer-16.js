@@ -18,8 +18,8 @@ function MyTimer() {
     running = 0,
     fresh = 1;
 
-  self.pomo_input = ko.observable(0.2);
-  self.break_input = ko.observable(1);
+  self.pomo_input = ko.observable(20);
+  self.break_input = ko.observable(5);
 
   self.initial_ms_pomo = ko.computed(function () {
     return self.pomo_input() * 1000 * 60;

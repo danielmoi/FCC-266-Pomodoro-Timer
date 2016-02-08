@@ -42,6 +42,10 @@ h1 {
   text-align: center;
 }
 
+.console {
+  display: none;
+}
+
 .header {
   height: 60px;
   line-height: 60px;
